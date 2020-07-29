@@ -13,9 +13,6 @@ setup(
     install_requires=[
         "pandas",
         "numpy",
-        "re",
         "nltk",
-        "sys",
-        "pkg_resources",
-    ]
+       ]
 )
