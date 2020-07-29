@@ -160,7 +160,6 @@ Let's say that we manually add a column "topic" that will hold the general subje
 .. code-block:: python
 
 	pybiblio.pub_by(data, by='topic')
-  
 
 .. automodule:: pybiblio.bibliometrics
-	:members:
+	:members:  
