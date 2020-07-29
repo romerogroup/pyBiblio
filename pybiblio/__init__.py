@@ -1,1 +1,1 @@
-from bibliometrics import Bibliometrics
+from .bibliometrics import Bibliometrics
