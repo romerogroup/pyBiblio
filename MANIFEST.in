@@ -1,0 +1,2 @@
+include *.txt *.md *.csv
+recursive-include pybiblio *.csv
