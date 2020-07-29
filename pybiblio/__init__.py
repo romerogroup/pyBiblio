@@ -7,4 +7,4 @@ __email__ = (
 __status__ = "Development"
 __date__ = "July 29th, 2020"
 
-from pybiblio.bibliometrics import Bibliometrics
+from .bibliometrics import Bibliometrics
