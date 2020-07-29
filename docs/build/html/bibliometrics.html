@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Bibliometric Analysis &mdash; pyBiblio  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pyBiblio
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">How to Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developers.html">Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wos.html">WoS Preparation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Bibliometric Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#number-of-citations-per-year">Number of citations per year</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#number-of-publications-by-funding-agency">Number of publications by funding agency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#number-of-citations-as-function-of-the-number-of-words-in-titles">Number of citations as function of the number of words in titles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-applications">Other Applications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyBiblio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+        
+      <li>Bibliometric Analysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/bibliometrics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bibliometric-analysis">
+<h1>Bibliometric Analysis<a class="headerlink" href="#bibliometric-analysis" title="Permalink to this headline">¶</a></h1>
+<p>The Bibliometrics class provides tools for a bibliometric analysis of Web of Science datasets.</p>
+<p>Members:</p>
+<ul class="simple">
+<li><p>titleClean: Clean title names (remove punctuation, stopwords and numbers).</p></li>
+<li><p>fundingClean: Clean funding agencies (remove grant number and punctuation) and group similar names.</p></li>
+<li><p>cit_by: Computes number of citations as function of the chosen parameter.</p></li>
+<li><p>cit_num: Computes number of citations per number of occurences in the chosen parameter.</p></li>
+<li><p>pub_by: Computes number of publications as function of the chosen parameter.</p></li>
+<li><p>pub_num: Computes number of publications per number of occurences in the chosen parameter.</p></li>
+</ul>
+<p>The definition of all these functions can be found at the bottom of that page.</p>
+<p>All examples on this page are computed using a dataset of research publications citing at least one of the papers associated with the software ABINIT. Those co-citations are available on the Web of Science website and the data was converted to a Pandas dataframe with the methodology described in the <a class="reference internal" href="wos.html#label-wos"><span class="std std-ref">WoS Preparation</span></a> page.</p>
+<p>To start working with the pyBiblio package, you first have to import the package and create an object of the class Bibliometrics like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pybiblio</span> <span class="kn">import</span> <span class="n">bibliometrics</span>
+<span class="n">analysis</span> <span class="o">=</span> <span class="n">bibliometrics</span><span class="o">.</span><span class="n">Bibliometrics</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="number-of-citations-per-year">
+<h2>Number of citations per year<a class="headerlink" href="#number-of-citations-per-year" title="Permalink to this headline">¶</a></h2>
+<p>The number of citations per year can easily be obtained with the following line of code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">citYear</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">cit_by</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;PY&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">norm</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">sort</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“PY” is the WoS tag for the year of publication so the function will only consider this column to compute the number of citations. Null values in the chosen column will be deleted. By setting n=5, the above line of code returns a Pandas dataframe with 5 rows of highest frequency. Frequency values will be normalized over the total number of citations as the binary parameter norm is True and rows are sorted by year and not by frequency because the parameter sort is False.</p>
+<p>Here is the result dataframe:</p>
+<table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-text">Citations per year</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>PY</p></th>
+<th class="head"><p>freq</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2012</p></td>
+<td><p>0.0883173</p></td>
+</tr>
+<tr class="row-odd"><td><p>2013</p></td>
+<td><p>0.151677</p></td>
+</tr>
+<tr class="row-even"><td><p>2014</p></td>
+<td><p>0.127143</p></td>
+</tr>
+<tr class="row-odd"><td><p>2015</p></td>
+<td><p>0.083359</p></td>
+</tr>
+<tr class="row-even"><td><p>2016</p></td>
+<td><p>0.0837868</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following lines of code help visualize the results in the previous table by graphing them in a bar plot:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#import libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">citYear</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">citYear</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span> <span class="c1">#barplot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="n">r</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">citYear</span><span class="p">))],</span> <span class="n">citYear</span><span class="o">.</span><span class="n">PY</span><span class="p">)</span> <span class="c1">#year labels</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized number of citations&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">13</span><span class="p">)</span>
+<span class="c1">#add the frequency values</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">citYear</span><span class="o">.</span><span class="n">freq</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;{:.2f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mf">0.0015</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/cit_by_year.png" src="_images/cit_by_year.png" />
+</div>
+<div class="section" id="number-of-publications-by-funding-agency">
+<h2>Number of publications by funding agency<a class="headerlink" href="#number-of-publications-by-funding-agency" title="Permalink to this headline">¶</a></h2>
+<p>The WoS tag “FU” contains, for each paper, a string of all different funding agencies and their corresponding grant number separated by a semicolon. However, a lot of agencies are written in different manners. For example, “DOE”, “Department of Energy”, “US Department of Energy” and “US DOE” all represent the same agency. To minimize those difference, we created a file with common variations of over hundred of the most recurrent funding agencies in the field of Density Functional Theory.</p>
+<p>The text file ‘FU.csv’ consists of rows in the format: <em>derived name of the funding agency</em> tab <em>official name</em>.</p>
+<p>Here is an example of the file format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">US</span> <span class="n">DOE</span>  <span class="n">US</span> <span class="n">DEPARTMENT</span> <span class="n">OF</span> <span class="n">ENERGY</span>
+<span class="n">DOE</span>     <span class="n">US</span> <span class="n">DEPARTMENT</span> <span class="n">OF</span> <span class="n">ENERGY</span>
+</pre></div>
+</div>
+<p>We would appreciate any contributions to this file, as it will benefit any user to achieve more precise results. Please contact <a class="reference external" href="mailto:mcd0029&#37;&#52;&#48;mix&#46;wvu&#46;edu">mcd0029<span>&#64;</span>mix<span>&#46;</span>wvu<span>&#46;</span>edu</a> if you would like to contribute.</p>
+<p>The following line of code will compute the number of publications per funding agency:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pubFunding</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">pub_by</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;FU&#39;</span><span class="p">,</span> <span class="n">dpc</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DI&#39;</span><span class="p">],</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">norm</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">sort</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following table shows the results of the above line of code. The dpc parameter holds a list of column names considered for removing duplicates. In this example, papers with identical DOI numbers will be removed before any computation is performed. When several columns are mentioned, observations will be removed if they have only one match. The parameter norm is set to False, so the number of publications are not normalized and the sort parameter set to True means that the results will be sorted in descending order.</p>
+<p>The results are listed below:</p>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">Funding agencies with highest number of publications</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>FU</p></th>
+<th class="head"><p>freq</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>US NATIONAL SCIENCE FOUNDATION</p></td>
+<td><p>287</p></td>
+</tr>
+<tr class="row-odd"><td><p>US DEPARTMENT OF ENERGY</p></td>
+<td><p>211</p></td>
+</tr>
+<tr class="row-even"><td><p>RESEARCH AND DEVELOPMENT PROGRAM OF CHINA</p></td>
+<td><p>157</p></td>
+</tr>
+<tr class="row-odd"><td><p>RESEARCH FOUNDATION DFG</p></td>
+<td><p>106</p></td>
+</tr>
+<tr class="row-even"><td><p>EUROPEAN UNION</p></td>
+<td><p>75</p></td>
+</tr>
+<tr class="row-odd"><td><p>GENCI</p></td>
+<td><p>68</p></td>
+</tr>
+<tr class="row-even"><td><p>OFFICE OF NAVAL RESEARCH</p></td>
+<td><p>62</p></td>
+</tr>
+<tr class="row-odd"><td><p>FONDS DE LA RECHERCHE SCIENTIFIQUE DE BELGIQUE</p></td>
+<td><p>57</p></td>
+</tr>
+<tr class="row-even"><td><p>RUSSIAN FOUNDATION FOR BASIC RESEARCH</p></td>
+<td><p>54</p></td>
+</tr>
+<tr class="row-odd"><td><p>NATURAL SCIENCES AND ENGINEERING RESEARCH COUNCIL OF CANADA</p></td>
+<td><p>47</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="number-of-citations-as-function-of-the-number-of-words-in-titles">
+<h2>Number of citations as function of the number of words in titles<a class="headerlink" href="#number-of-citations-as-function-of-the-number-of-words-in-titles" title="Permalink to this headline">¶</a></h2>
+<p>The functions <em>cit_num</em> and <em>pub_num</em> compute the number of different occurences (like number of different authors, countries or words) against the number of citations or publications (respectively). A good example is the following line of code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">citTitle</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">cit_num</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;TI&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="s1">&#39;theory&#39;</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">norm</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">sort</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the tag ‘TI’ is passed in the <em>by</em> parameter, the column holding titles is sent to the function <em>titleClean</em> that will remove any punctuation, symbols, hyperlinks, digits and stop words. The result will be a string of the remaining words joined by the separator chosen (in this case, a comma but the default is a semi-colon). To make it more clear, the title “The origin of incipient ferroelectricity in lead telluride” will return “ferroelectricity;incipient;lead;origin;telluride”. Keeping the same example, the number of different occurences will be 5.</p>
+<p>Another useful parameter available on all functions in the bibliometrics class is the subset parameter. This will help subset your data, before processing, according to the elements of the list. In the above line of code, we have two elements, meaning that a title will only be taken into account if both words “density” and “theory” are elements of the title. This parameter is case insensitive.</p>
+<p>With some additional lines of codes, we can easily plot the results and determine the lengths of titles yielding the highest number of citations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">citTitle</span><span class="o">.</span><span class="n">numTI</span><span class="p">,</span> <span class="n">citTitle</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of words in title&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Number of citations&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">citTitle</span><span class="o">.</span><span class="n">numTI</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/cit_num_words.png" src="_images/cit_num_words.png" />
+</div>
+<div class="section" id="other-applications">
+<h2>Other Applications<a class="headerlink" href="#other-applications" title="Permalink to this headline">¶</a></h2>
+<p>WoS tags are required by a function if you are working with the number of citations, the title or the funding agencies. However, the functions explained above can return a result for any chosen column that has a type float, int or string.</p>
+<p>Let’s say that we manually add a column “topic” that will hold the general subject of a paper. This is not a Wos tag but the following line will return a pandas dataframe in the same manner as any other column:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pybiblio</span><span class="o">.</span><span class="n">pub_by</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;topic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="target" id="module-pybiblio.bibliometrics"></span><dl class="class">
+<dt id="pybiblio.bibliometrics.Bibliometrics">
+<em class="property">class </em><code class="sig-prename descclassname">pybiblio.bibliometrics.</code><code class="sig-name descname">Bibliometrics</code><a class="headerlink" href="#pybiblio.bibliometrics.Bibliometrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a bibliometric implementation for Web of Science datasets.</p>
+<dl class="simple">
+<dt>Members:</dt><dd><ul class="simple">
+<li><p>titleClean: Clean title names (remove punctuation, stopwords and numbers).</p></li>
+<li><p>fundingClean: Clean funding agencies (remove grant number and punctuation) and group the ones with similar names.</p></li>
+<li><p>cit_by: Computes number of citations as function of the chosen parameter.</p></li>
+<li><p>cit_num: Computes number of citations per number of occurences in the chosen parameter.</p></li>
+<li><p>pub_by: Computes number of publications as function of the chosen parameter.</p></li>
+<li><p>pub_num: Computes number of publications per number of occurences in the chosen parameter.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pybiblio.bibliometrics.Bibliometrics.cit_by">
+<code class="sig-name descname">cit_by</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">by</em>, <em class="sig-param">n=0</em>, <em class="sig-param">subset=[]</em>, <em class="sig-param">dpc=[]</em>, <em class="sig-param">sep=';'</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">norm=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pybiblio.bibliometrics.Bibliometrics.cit_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes number of citations as function of the chosen parameter ‘by’.</p>
+<p>Returns a pandas dataframe with 2 columns: value and frequency.</p>
+<p>Example: number of citations by year, number of citations per author.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>df is a pandas dataframe.</p></li>
+<li><p>by is a string of the column name chosen.</p></li>
+<li><p>n is an integer to select the n rows with largest values.</p></li>
+<li><p>subset is a list of items to consider in the chosen column.</p></li>
+<li><p>dpc is a list of column names to consider to remove duplicates.</p></li>
+<li><p>sep is the separator (e.g. for China;USA in countries)</p></li>
+<li><p>sort is a binary variable. If true, the dataframe returned is sorted by decreasing frequency value</p></li>
+<li><p>norm is a binary variable. If true, frequency values are normalized by the total number of citations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pybiblio.bibliometrics.Bibliometrics.cit_num">
+<code class="sig-name descname">cit_num</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">by</em>, <em class="sig-param">n=0</em>, <em class="sig-param">subset=[]</em>, <em class="sig-param">dpc=[]</em>, <em class="sig-param">sep=';'</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">norm=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pybiblio.bibliometrics.Bibliometrics.cit_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes number of citations as function of the number of occurences for chosen parameter ‘by’.</p>
+<p>Returns a pandas dataframe with 2 columns: value and frequency.</p>
+<p>Example: number of citations per number of authors in a paper.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>df is a pandas dataframe.</p></li>
+<li><p>by is a string of the column name chosen.</p></li>
+<li><p>n is an integer to select the n rows with largest values.</p></li>
+<li><p>subset is a list of items to consider in the chosen column.</p></li>
+<li><p>dpc is a list of column names to consider to remove duplicates.</p></li>
+<li><p>sep is the separator (e.g. for China;USA in countries)</p></li>
+<li><p>sort is a binary variable. If true, the dataframe returned is sorted by decreasing frequency value</p></li>
+<li><p>norm is a binary variable. If true, frequency values are normalized by the total number of citations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pybiblio.bibliometrics.Bibliometrics.fundingClean">
+<code class="sig-name descname">fundingClean</code><span class="sig-paren">(</span><em class="sig-param">FU</em>, <em class="sig-param">sep=';'</em><span class="sig-paren">)</span><a class="headerlink" href="#pybiblio.bibliometrics.Bibliometrics.fundingClean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean all funding agencies in the list FU.</p>
+<p>Function called by cit_num, cit_by, pub_num and pub_by if the parameter is FU.</p>
+<p>For each element of the list, remove grant number, punctuation and symbols, strip whitespaces.</p>
+<p>Agencies are compared with known data to group similar names.</p>
+<p>Returns a list of strings in the same format as FU to keep the order.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pybiblio.bibliometrics.Bibliometrics.pub_by">
+<code class="sig-name descname">pub_by</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">by</em>, <em class="sig-param">n=0</em>, <em class="sig-param">subset=[]</em>, <em class="sig-param">dpc=[]</em>, <em class="sig-param">sep=';'</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">norm=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pybiblio.bibliometrics.Bibliometrics.pub_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes number of publications for chosen parameter ‘by’.</p>
+<p>Returns a pandas dataframe with 2 columns: value and frequency.</p>
+<p>Example: number of publications per year.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>df is a pandas dataframe.</p></li>
+<li><p>by is a string of the column name chosen.</p></li>
+<li><p>n is an integer to select the n rows with largest values.</p></li>
+<li><p>subset is a list of items to consider in the chosen column.</p></li>
+<li><p>dpc is a list of column names to consider to remove duplicates.</p></li>
+<li><p>sep is the separator (e.g. for China;USA in countries)</p></li>
+<li><p>sort is a binary variable. If true, the dataframe returned is sorted by decreasing frequency value</p></li>
+<li><p>norm is a binary variable. If true, frequency values are normalized by the total number of citations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pybiblio.bibliometrics.Bibliometrics.pub_num">
+<code class="sig-name descname">pub_num</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">by</em>, <em class="sig-param">n=0</em>, <em class="sig-param">subset=[]</em>, <em class="sig-param">dpc=[]</em>, <em class="sig-param">sep=';'</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">norm=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pybiblio.bibliometrics.Bibliometrics.pub_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes number of publications as function of the number of occurences for chosen parameter ‘by’.</p>
+<p>Returns a pandas dataframe with 2 columns: value and frequency.</p>
+<p>Example: number of publications per number of authors in a paper.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>df is a pandas dataframe.</p></li>
+<li><p>by is a string of the column name chosen.</p></li>
+<li><p>n is an integer to select the n rows with largest values.</p></li>
+<li><p>subset is a list of items to consider in the chosen column.</p></li>
+<li><p>dpc is a list of column names to consider to remove duplicates.</p></li>
+<li><p>sep is the separator (e.g. for China;USA in countries)</p></li>
+<li><p>sort is a binary variable. If true, the dataframe returned is sorted by decreasing frequency value</p></li>
+<li><p>norm is a binary variable. If true, frequency values are normalized by the total number of citations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pybiblio.bibliometrics.Bibliometrics.titleClean">
+<code class="sig-name descname">titleClean</code><span class="sig-paren">(</span><em class="sig-param">TI</em>, <em class="sig-param">sep=';'</em><span class="sig-paren">)</span><a class="headerlink" href="#pybiblio.bibliometrics.Bibliometrics.titleClean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean all titles in the list TI.</p>
+<p>Function called by cit_num, cit_by, pub_num and pub_by if the parameter is TI.</p>
+<p>Converts all titles to lowercase, remove punctuation, symbols and numbers, removes stopwords defined in the NLTK package and strip whitespaces.</p>
+<p>Returns a string of leftover words separated by a semicolon.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Romero Group
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

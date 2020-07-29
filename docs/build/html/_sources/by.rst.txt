@@ -1,0 +1,53 @@
+cit_by and pub_by
+=================
+
+Both cit_by and pub_by are formatted in the following manner:
+
+.. autofunction:: pybiblio.cit_by
+	
+Number of citations per year
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+	pybiblio.cit_by(data, by='PY', n=5, sort = False, norm=True)
+
+"PY" is the WoS tag for the year of publication so the function will only consider this column to compute the number of citations. Null values in the chosen column will be deleted. By setting n=5, the above line of code returns a Pandas dataframe with 5 rows of highest frequency. Frequency values will be normalized over the total number of citations as the binary parameter norm is True and rows are sorted by year and not by frequency because the parameter sort is False.
+
+Here is the result dataframe:
+
+.. list-table:: Citations per year
+    :widths: 10 10
+    :header-rows: 1
+
+    * - PY
+      - freq
+    * - 2012
+      - 0.0883173
+    * - 2013
+      - 0.151677
+    * - 2014
+      - 0.127143
+    * - 2015
+      - 0.083359
+    * - 2016
+      - 0.087868
+
+
+Number of publications by funding agency
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The WoS tag "FU" contains, for each paper, a string of all different funding agencies and their corresponding grant number separated by a semicolon. However, a lot of agencies are written in different manners. For example, "DOE", "Department of Energy", "US Department of Energy", "US DOE" all represent the same agency. To 
+
+
+
+Other Applications
+^^^^^^^^^^^^^^^^^^
+
+WoS tags are required by function if you are working with the number of citations, the title or the funding agencies. However, the two functions explained above can return a result for any column chosen that has a type float, int or string. 
+
+Let's say that we add a column "DBP" with the name of the person downloading the file. This is not a Wos tag but the following line will return a pandas dataframe in the same manner as any other column:
+
+.. code-block:: python
+
+	pybiblio.pub_by(data, by='DBP')  

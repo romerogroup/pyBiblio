@@ -1,0 +1,6 @@
+cit_num and pub_num
+===================
+
+Both cit_num and pub_num are formatted in the following manner:
+
+.. autofunction:: pybiblio.cit_num
