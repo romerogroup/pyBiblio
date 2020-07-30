@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from pybiblio import bibliometrics
 
 #import data
-data = pd.read_csv("./data.csv")
+data = pd.read_csv("./test/data.csv")
 
 #create a bibliometrics object
 analysis = bibliometrics.Bibliometrics()

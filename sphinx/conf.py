@@ -12,13 +12,8 @@
 #
 import os
 import sys
-<<<<<<< HEAD:sphinx/conf.py
+
 sys.path.insert(0, os.path.abspath(".."))
-=======
-
-sys.path.insert(0, os.path.abspath("../../"))
->>>>>>> 8519aefb2cd952787a4acc19394e821ea9433e47:sphinx/source/conf.py
-
 
 # -- Project information -----------------------------------------------------
 
@@ -27,7 +22,7 @@ copyright = "2020, Romero Group"
 author = "Romero Group"
 
 # The full version, including alpha/beta/rc tags
-release = ""
+release = "1.0.5"
 
 
 # -- General configuration ---------------------------------------------------
