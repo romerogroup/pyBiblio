@@ -7,12 +7,9 @@ setup(
     author_email="mcd0029@mix.wvu.edu,alromero@mail.wvu.edu",
     url="https://github.com/romerogroup/pyBiblio",
     packages=["pybiblio"],
-    license="LICENSE.txt",
-    data_files=[("", ["LICENSE.txt"])],
+    license="LICENSE",
+    data_files=[("", ["LICENSE"])],
+    package_data={"pybiblio": ["FU.csv"]},
     description="A Python library for basic bibliometic measures.",
-    install_requires=[
-        "pandas",
-        "numpy",
-        "nltk",
-       ]
+    install_requires=["pandas", "numpy", "nltk",],
 )
