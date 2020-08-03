@@ -286,7 +286,7 @@ class Bibliometrics:
             SUB = pd.Series(keep)
             U2 = cit
     
-        #compute number of authors
+        #compute number of occurences
         numSUB = []
         if isinstance(SUB[0], str):
             for x in SUB:
