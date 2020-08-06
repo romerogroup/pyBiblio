@@ -79,12 +79,12 @@ Number of publications by funding agency
 
 The WoS tag "FU" contains, for each paper, a string of all different funding agencies and their corresponding grant number separated by a semicolon. However, a lot of agencies are written in different manners. For example, "DOE", "Department of Energy", "US Department of Energy" and "US DOE" all represent the same agency. To minimize those difference, we created a file with common variations of over hundred of the most recurrent funding agencies in the field of Density Functional Theory. 
 
-The text file 'FU.csv' consists of rows in the format: *derived name of the funding agency* \tab *official name*. 
+The text file 'FU.csv' consists of rows in the format: *derived name of the funding agency*,*official name*. 
 
 Here is an example of the file format::
 
-	US DOE	US DEPARTMENT OF ENERGY
-	DOE	US DEPARTMENT OF ENERGY
+	US DOE,US DEPARTMENT OF ENERGY
+	DOE,US DEPARTMENT OF ENERGY
 
 We would appreciate any contributions to this file, as it will benefit any user to achieve more precise results. Please contact mcd0029@mix.wvu.edu if you would like to contribute.
 
