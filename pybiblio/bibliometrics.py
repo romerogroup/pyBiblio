@@ -134,7 +134,7 @@ class Bibliometrics:
         if not by in df.columns:
             sys.exit('Column not found.')
         
-        if not 'U2' in df.columns:
+        if not 'TC' in df.columns:
             sys.exit('Column names do not match WoS tags.')
             
         #if dpc parameter is not empty, remove duplicates
@@ -149,10 +149,10 @@ class Bibliometrics:
         
         #remove null values
         df = df.dropna(subset=[by])
-        df = df.dropna(subset=['U2'])
+        df = df.dropna(subset=['TC'])
         df = df.reset_index(drop=True)
         #isolate 
-        U2 = pd.Series(df['U2'])
+        TC = pd.Series(df['TC'])
         
         if by=='TI':
             #get clean titles
@@ -173,10 +173,10 @@ class Bibliometrics:
             for elem in col:
                 if all(w in elem.lower() for w in subset):
                     keep.append(elem)
-                    cit.append(U2[count])
+                    cit.append(TC[count])
                 count+=1    
             SUB = pd.Series(keep)
-            U2 = cit
+            TC = cit
     
         #unwrap
         total_unwrap = []
@@ -192,11 +192,11 @@ class Bibliometrics:
         
         #create a list with added number of citations
         total_cit = [0]*len(uniq)
-        for k in range(len(U2)):
+        for k in range(len(TC)):
             #find the index of number of authors
             index = np.where(uniq == total_unwrap[k])[0][0]
             #add number of citations to matching number of authors
-            total_cit[index] = total_cit[index]+U2[k]
+            total_cit[index] = total_cit[index]+TC[k]
     
         #create final database
         result = pd.DataFrame(list(zip(uniq, total_cit)), columns=[by, 'freq'])
@@ -242,7 +242,7 @@ class Bibliometrics:
         if not by in df.columns:
             sys.exit('Column not found.')
         
-        if not 'U2' in df.columns:
+        if not 'TC' in df.columns:
             sys.exit('Column names do not match WoS tags.')
         
         #if dpc parameter is not empty, remove duplicates
@@ -257,10 +257,10 @@ class Bibliometrics:
         
         #remove null values
         df = df.dropna(subset=[by])
-        df = df.dropna(subset=['U2'])
+        df = df.dropna(subset=['TC'])
         df = df.reset_index(drop=True)
         #isolate 
-        U2 = pd.Series(df['U2'])
+        TC = pd.Series(df['TC'])
         
         if by=='TI':
             #get clean titles
@@ -281,10 +281,10 @@ class Bibliometrics:
             for elem in col:
                 if all(w in elem.lower() for w in subset):
                     keep.append(elem)
-                    cit.append(U2[count])
+                    cit.append(TC[count])
                 count+=1    
             SUB = pd.Series(keep)
-            U2 = cit
+            TC = cit
     
         #compute number of occurences
         numSUB = []
@@ -301,11 +301,11 @@ class Bibliometrics:
         
         #create a list with added number of citations
         total_cit = [0]*len(uniq)
-        for k in range(len(U2)):
+        for k in range(len(TC)):
             #find the index of number of occurences
             index = np.where(uniq == numSUB[k])[0][0]
             #add number of citations to matching number of occurences
-            total_cit[index] = total_cit[index]+U2[k]
+            total_cit[index] = total_cit[index]+TC[k]
     
         #create final database
         result = pd.DataFrame(list(zip(uniq, total_cit)), columns=['num'+by, 'freq'])

@@ -154,7 +154,7 @@
             
   <div class="section" id="wos-preparation">
 <span id="label-wos"></span><h1>WoS Preparation<a class="headerlink" href="#wos-preparation" title="Permalink to this headline">¶</a></h1>
-<p>Our implementation of bibliometrics tools require data to be in a Pandas dataframe format and that column names match the WoS tags(TI for title, U2 for the citations, …).</p>
+<p>Our implementation of bibliometrics tools require data to be in a Pandas dataframe format and that column names match the WoS tags(TI for title, TC for the citations, …).</p>
 <p>To meet those requirements, we suggest using the package Bibliometrix on R. For step-by-step explications, see their <a class="reference external" href="https://cran.r-project.org/web/packages/bibliometrix/vignettes/bibliometrix-vignette.html">tutorial</a>. Basically, text files can be downloaded from the <a class="reference external" href="http://www.webofknowledge.com">Web of Science website</a> and the package bibliometrix can create a dataframe by parsing those files. A dataframe can easily be exported as a CSV (Comma Separated Values) file and used with our library pyBiblio.</p>
 <p>There exists several other libraries in different programming languages that can also parse WoS text files. As long as WoS tags are preserved, any method can be used to prepare your data.</p>
 </div>
