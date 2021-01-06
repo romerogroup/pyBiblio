@@ -1,4 +1,5 @@
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
 
 setup(
     name="pyBiblio",
@@ -11,5 +12,5 @@ setup(
     data_files=[("", ["LICENSE.txt"])],
     package_data={"pybiblio": ["FU.csv"]},
     description="A Python library for basic bibliometic measures.",
-    install_requires=["pandas", "numpy", "nltk",],
+    install_requires=["pandas", "numpy", "nltk"],
 )
