@@ -1,7 +1,7 @@
 Tutorials
 =========
 
-The following tutorials explains the basic usage of pybiblio. 
+The following tutorials explain the basic usage of pybiblio. 
 
 .. toctree::
    

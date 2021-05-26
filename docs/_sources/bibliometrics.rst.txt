@@ -14,14 +14,14 @@ Members:
 	
 The definition of all these functions can be found at the bottom of that page.
 
-All examples on this page are computed using a dataset of research publications citing at least one of the papers associated with the software ABINIT. Those co-citations are available on the Web of Science website and the data was converted to a Pandas dataframe with the methodology described in the :ref:`label-wos` page.
+All examples on this page are computed using a dataset of research publications citing at least one of the papers associated with the software ABINIT between its creation and 2019. The exact dataframe used can be found in the *test* folder of our library. Those citations are available on the Web of Science website and the data was converted to a Pandas dataframe with the methodology described in the :ref:`label-wos` page.
 
 To start working with the pyBiblio package, you first have to import the package and create an object of the class Bibliometrics like so:
 
 .. code-block:: python
 
-        from pybiblio import bibliometrics
-        analysis = bibliometrics.Bibliometrics()
+        from pybiblio import Bibliometrics
+        analysis = Bibliometrics()
 
 Number of citations per year
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -30,7 +30,7 @@ The number of citations per year can easily be obtained with the following line 
 
 .. code-block:: python
 
-	citYear = analysis.cit_by(data, by='PY', n=5, norm = True, sort = False)
+	citYear = analysis.cit_by(data, by = 'PY', n = 5, norm = True, sort = False)
 
 "PY" is the WoS tag for the year of publication so the function will only consider this column to compute the number of citations. Null values in the chosen column will be deleted. By setting n=5, the above line of code returns a Pandas dataframe with 5 rows of highest frequency. Frequency values will be normalized over the total number of citations as the binary parameter norm is True and rows are sorted by year and not by frequency because the parameter sort is False.
 
@@ -42,16 +42,16 @@ Here is the result dataframe:
 
     * - PY
       - freq
-    * - 2012
-      - 0.0883173
+    * - 2006
+      - 0.0993408
+    * - 2008
+      - 0.0854208
+    * - 2009
+      - 0.181217
+    * - 2010
+      - 0.0737779
     * - 2013
-      - 0.151677
-    * - 2014
-      - 0.127143
-    * - 2015
-      - 0.083359
-    * - 2016
-      - 0.0837868
+      - 0.0812602
 
 The following lines of code help visualize the results in the previous table by graphing them in a bar plot: 
 
@@ -77,9 +77,9 @@ The following lines of code help visualize the results in the previous table by 
 Number of publications by funding agency
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The WoS tag "FU" contains, for each paper, a string of all different funding agencies and their corresponding grant number separated by a semicolon. However, a lot of agencies are written in different manners. For example, "DOE", "Department of Energy", "US Department of Energy" and "US DOE" all represent the same agency. To minimize those difference, we created a file with common variations of over hundred of the most recurrent funding agencies in the field of Density Functional Theory. 
+The WoS tag "FU" contains, for each paper, a string of all different funding agencies and their corresponding grant number separated by a semicolon. However, a lot of agencies are written in different manners. For example, "DOE", "Department of Energy", "US Department of Energy" and "US DOE" all represent the same agency. To minimize those difference, we created a file with common variations of over five hundred of the most recurrent funding agencies in the field of Density Functional Theory. 
 
-The text file 'FU.csv' consists of rows in the format: *derived name of the funding agency*,*official name*. 
+The text file 'FU.csv' consists of rows in the format: *derived name of the funding agency*, *official name*. 
 
 Here is an example of the file format::
 
@@ -92,7 +92,7 @@ The following line of code will compute the number of publications per funding a
 
 .. code-block:: python
 
-	pubFunding = analysis.pub_by(data, by='FU', dpc=['DI'], n=10, norm = False, sort = True)
+	pubFunding = analysis.pub_by(data, by = 'FU', dpc = ['DI'], n = 10, norm = False, sort = True)
 
 The following table shows the results of the above line of code. The dpc parameter holds a list of column names considered for removing duplicates. In this example, papers with identical DOI numbers will be removed before any computation is performed. When several columns are mentioned, observations will be removed if they have only one match. The parameter norm is set to False, so the number of publications are not normalized and the sort parameter set to True means that the results will be sorted in descending order.
 
@@ -107,7 +107,7 @@ The results are listed below:
 	* - US NATIONAL SCIENCE FOUNDATION
 	  - 287
 	* - US DEPARTMENT OF ENERGY
-	  - 211
+	  - 220
 	* - RESEARCH AND DEVELOPMENT PROGRAM OF CHINA
 	  - 157
 	* - RESEARCH FOUNDATION DFG
@@ -133,9 +133,9 @@ The functions *cit_num* and *pub_num* compute the number of different occurences
 
 .. code-block:: python
 
-	citTitle = analysis.cit_num(data, by='TI', n=15, subset=['density', 'theory'], sep=',', norm = False, sort = False)
+	citTitle = analysis.cit_num(data, by = 'TI', n = 15, subset = ['density', 'theory'], sep = ',', norm = False, sort = False)
 
-When the tag 'TI' is passed in the *by* parameter, the column holding titles is sent to the function *titleClean* that will remove any punctuation, symbols, hyperlinks, digits and stop words. The result will be a string of the remaining words joined by the separator chosen (in this case, a comma but the default is a semi-colon). To make it more clear, the title "The origin of incipient ferroelectricity in lead telluride" will return "ferroelectricity;incipient;lead;origin;telluride". Keeping the same example, the number of different occurences will be 5.
+When the tag 'TI' is passed in the *by* parameter, the column holding titles is sent to the function *titleClean* that will remove any punctuation, symbols, hyperlinks, digits and stop words. The result will be a string of the remaining words joined by the separator chosen (in this case, a comma but the default is a semi-colon). To make it more clear, the title "Authorship and citation cultural nature in density functional theory from solid state computational packages" will return "authorship;citation;computational;cultural;density;functional;nature;packages;solid;state;theory". Keeping the same example, the number of different occurences will be 11.
 
 Another useful parameter available on all functions in the bibliometrics class is the subset parameter. This will help subset your data, before processing, according to the elements of the list. In the above line of code, we have two elements, meaning that a title will only be taken into account if both words "density" and "theory" are elements of the title. This parameter is case insensitive.
 
@@ -159,7 +159,7 @@ Let's say that we manually add a column "topic" that will hold the general subje
 
 .. code-block:: python
 
-	pybiblio.pub_by(data, by='topic')
+	analysis.pub_by(data, by = 'topic')
 
 .. automodule:: pybiblio.bibliometrics
 	:members:  

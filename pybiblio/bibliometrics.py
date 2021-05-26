@@ -5,6 +5,9 @@ import re
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import pkg_resources
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
 
 
 class Bibliometrics:
@@ -135,7 +138,7 @@ class Bibliometrics:
             sys.exit('Column not found.')
         
         if not 'TC' in df.columns:
-            sys.exit('Column names do not match WoS tags.')
+            sys.exit('Column TC for citations not found.')
             
         #if dpc parameter is not empty, remove duplicates
         if dpc:
@@ -168,38 +171,52 @@ class Bibliometrics:
             keep = []
             cit = []
             col = SUB
-            subset = [s.lower() for s in subset]
-            count = 0
-            for elem in col:
-                if all(w in elem.lower() for w in subset):
-                    keep.append(elem)
-                    cit.append(TC[count])
-                count+=1    
+            if isinstance(SUB[0], str):  
+                subset = [s.lower() for s in subset]
+                count = 0
+                for elem in col:
+                    if all(w in elem.lower() for w in subset):
+                        keep.append(elem)
+                        cit.append(TC[count])
+                    count+=1    
+            else:
+                count = 0
+                for elem in col:
+                    if elem in subset:
+                        keep.append(elem)
+                        cit.append(TC[count])
+                    count+=1
             SUB = pd.Series(keep)
             TC = cit
     
-        #unwrap
-        total_unwrap = []
         if isinstance(SUB[0], str):
+            #if the elements are string type
+            total_unwrap = []
             for x in SUB:
-                for y in np.unique(x.split(sep)):
-                    total_unwrap.append(y.strip())
-        else:
-            total_unwrap = SUB
+                ls = np.unique(x.split(sep))
+                total_unwrap.append([word.strip() for word in ls])
     
-        #list of unique number of authors
-        uniq = np.unique(total_unwrap)
+            #list of unique number of authors
+            uniq = np.unique([item for sublist in total_unwrap for item in sublist])
+            
+            #create a list with added number of citations
+            total_cit = [0]*len(uniq)
+            for i in range(len(total_unwrap)):
+                for j in total_unwrap[i]:
+                    idx = np.where(uniq == j)[0][0]
+                    total_cit[idx] = total_cit[idx] + TC[i]
+                
+            #create final database
+            result = pd.DataFrame(list(zip(uniq, total_cit)), columns=[by, 'freq'])
         
-        #create a list with added number of citations
-        total_cit = [0]*len(uniq)
-        for k in range(len(TC)):
-            #find the index of number of authors
-            index = np.where(uniq == total_unwrap[k])[0][0]
-            #add number of citations to matching number of authors
-            total_cit[index] = total_cit[index]+TC[k]
-    
-        #create final database
-        result = pd.DataFrame(list(zip(uniq, total_cit)), columns=[by, 'freq'])
+        else:
+            x = pd.DataFrame(zip(SUB, np.array(TC)), columns = ['SUB', 'TC'])
+            #group by the selected column
+            final = x.groupby('SUB').sum()
+            #create final database
+            result = pd.DataFrame(final)
+            result.reset_index(inplace = True)
+            result.columns = [by, 'freq']
     
         #normalization
         if norm == True:

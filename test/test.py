@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from pybiblio import bibliometrics
 
 #import data
-data = pd.read_csv("./test/data.csv")
+data = pd.read_csv("data.csv")
 
 #create a bibliometrics object
 analysis = bibliometrics.Bibliometrics()
@@ -34,4 +34,3 @@ plt.plot(citTitle.numTI, citTitle.freq)
 plt.xlabel("Number of words in title", fontsize=14)
 plt.ylabel("Number of citations", fontsize=14)
 plt.xticks(citTitle.numTI)
-
