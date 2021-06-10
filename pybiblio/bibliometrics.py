@@ -87,6 +87,10 @@ class Bibliometrics:
         
         '''
         
+        #if function used on its own
+        if (not isinstance(FU, pd.Series)) and (isinstance(FU, str)):
+            FU = [FU]
+        
         post = []
         for x in FU:
             #for all observations

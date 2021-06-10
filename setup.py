@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name="pyBiblio",
-    version="1.0.7",
+    version="1.0.8",
     author="Marie Dumaz,Aldo Romero",
     author_email="mcd0029@mix.wvu.edu,alromero@mail.wvu.edu",
     url="https://github.com/romerogroup/pyBiblio",

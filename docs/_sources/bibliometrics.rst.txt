@@ -26,7 +26,7 @@ To start working with the pyBiblio package, you first have to import the package
 Number of citations per year
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The number of citations per year can easily be obtained with the following line of code:
+The function cit_by is handy to quickly compute the number of citations depending on the values of a certain column. A good example of this function is to calulate the number of citations per year with the following line of code:
 
 .. code-block:: python
 
@@ -66,7 +66,7 @@ The following lines of code help visualize the results in the previous table by 
 	plt.xticks([r + 0.05 for r in range(len(citYear))], citYear.PY) #year labels
 	plt.xlabel("Year", fontsize = 15)
 	plt.ylabel("Normalized number of citations", fontsize = 13)
-	#add the frequency values 
+	#annotate the frequency values 
 	for x,y in zip(r1, citYear.freq):
     		label = "{:.2f}".format(y)
     		plt.annotate(label, (x,y+0.0015), ha='center')
@@ -77,7 +77,7 @@ The following lines of code help visualize the results in the previous table by 
 Number of publications by funding agency
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The WoS tag "FU" contains, for each paper, a string of all different funding agencies and their corresponding grant number separated by a semicolon. However, a lot of agencies are written in different manners. For example, "DOE", "Department of Energy", "US Department of Energy" and "US DOE" all represent the same agency. To minimize those difference, we created a file with common variations of over five hundred of the most recurrent funding agencies in the field of Density Functional Theory. 
+The function pub_by is similar to the function cit_by and has the same parameters, but computes the number of publications instead of the citations. In this example, we compute the number of publications by funding agency. The WoS tag "FU" contains, for each paper, a string of all different funding agencies and their corresponding grant number separated by a semicolon. However, a lot of agencies are written in different manners. For example, "DOE", "Department of Energy", "US Department of Energy" and "US DOE" all represent the same agency. To minimize those difference, we created a file with common variations of over five hundred of the most recurrent funding agencies in the field of Density Functional Theory. 
 
 The text file 'FU.csv' consists of rows in the format: *derived name of the funding agency*, *official name*. 
 
